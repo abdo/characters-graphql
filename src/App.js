@@ -1,11 +1,16 @@
+import { Container, Layout } from './style';
+
 import CharactersList from 'pages/CharactersList';
-import { Container } from './style';
+import Header from 'components/Header';
 
 function App() {
   return (
-    <Container>
-      <CharactersList />
-    </Container>
+    <Layout>
+      <Header/>
+      <Container>
+        <CharactersList />
+      </Container>
+    </Layout>
   );
 }
 

@@ -1,3 +1,5 @@
+import 'index.css';
+
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
 import App from './App';
