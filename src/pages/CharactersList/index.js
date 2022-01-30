@@ -1,9 +1,11 @@
-import { CharactersContainer, Container, Image } from './style';
+import { CharactersContainer, Image } from './style';
 import { useEffect, useState } from 'react';
 
+import { Link } from 'react-router-dom';
+import scrollToTop from 'helpers/scrollToTop';
 import useCharacters from 'hooks/useCharacters';
 
-const statusList = ['Alive', 'Dead' , 'unknown'];
+const statusList = ['Alive', 'Dead', 'unknown'];
 
 const CharactersList = () => {
   const [page, setPage] = useState(1);
@@ -21,7 +23,7 @@ const CharactersList = () => {
   }, [page, status, searchText]); // eslint-disable-line
 
   return (
-    <Container>
+    <>
       <input
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
@@ -45,10 +47,14 @@ const CharactersList = () => {
                 statusList.includes(status) ? c.status === status : true,
               )
               ?.map((character) => (
-                <div key={character.name}>
+                <Link
+                  to={`/${character.id}`}
+                  onClick={scrollToTop}
+                  key={character.id}
+                >
                   <Image src={character.image} alt='characterimage' />
                   <h3>{character.name}</h3>
-                </div>
+                </Link>
               ))}
           </>
         )}
@@ -60,7 +66,7 @@ const CharactersList = () => {
           </option>
         ))}
       </select>
-    </Container>
+    </>
   );
 };
 

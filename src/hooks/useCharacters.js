@@ -10,8 +10,6 @@ const GET_CHARACTERS = gql`
         id
         name
         status
-        species
-        gender
         image
       }
     }

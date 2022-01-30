@@ -8,5 +8,6 @@ export const Container = styled.header`
   background-color: ${({ theme }) => theme.colors.background};
   width: 100%;
   top: 0;
+  user-select: none;
 `;
 

@@ -9,5 +9,5 @@ export const Layout = styled.div`
 
 export const Container = styled.div`
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 150px auto;
 `;
