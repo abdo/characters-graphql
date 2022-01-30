@@ -1,8 +1,8 @@
 import { gql, useLazyQuery } from '@apollo/client';
 
 const GET_CHARACTERS = gql`
-  query GetCharacters($page: Int, $status: String) {
-    characters(page: $page, filter: { status: $status }) {
+  query GetCharacters($page: Int, $status: String, $searchText: String) {
+    characters(page: $page, filter: { name: $searchText, status: $status }) {
       info {
         pages
       }
@@ -18,11 +18,11 @@ const GET_CHARACTERS = gql`
   }
 `;
 
-const useCharacters = ({ page = 1, status }) => {
+const useCharacters = ({ page = 1, status, searchText }) => {
   const [getCharacters, { error, loading, data }] = useLazyQuery(
     GET_CHARACTERS,
     {
-      variables: { page, status },
+      variables: { page, status, searchText },
     },
   );
 
