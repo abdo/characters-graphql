@@ -1,4 +1,10 @@
-import { CharactersContainer, Image } from './style';
+import {
+  CharactersContainer,
+  FiltersContainer,
+  Image,
+  InputLabel,
+  InputLabelContainer,
+} from './style';
 import { useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
@@ -20,26 +26,38 @@ const CharactersList = () => {
 
   useEffect(() => {
     getCharacters();
+    scrollToTop();
   }, [page, status, searchText]); // eslint-disable-line
 
   return (
     <>
-      <input
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
-        placeholder='Search characters'
-      />
-      <select name='status' onChange={(e) => setStatus(e?.target?.value)}>
-        <option value=''>All</option>
-        {statusList.map((statusOption) => (
-          <option selected={status === statusOption} value={statusOption}>
-            {statusOption}
-          </option>
-        ))}
-      </select>
+      <FiltersContainer>
+        <InputLabelContainer>
+          <input
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            placeholder='Search characters'
+          />
+        </InputLabelContainer>
+
+        <InputLabelContainer>
+          <InputLabel>Status</InputLabel>
+          <select name='status' onChange={(e) => setStatus(e?.target?.value)}>
+            <option value=''>All</option>
+            {statusList.map((statusOption) => (
+              <option selected={status === statusOption} value={statusOption}>
+                {statusOption}
+              </option>
+            ))}
+          </select>
+        </InputLabelContainer>
+      </FiltersContainer>
+
       <CharactersContainer>
         {loading ? (
           <h2>Loading...</h2>
+        ) : !loading && !data?.characters?.results?.length ? (
+          <h2>No characters found</h2>
         ) : (
           <>
             {data?.characters?.results
@@ -59,13 +77,24 @@ const CharactersList = () => {
           </>
         )}
       </CharactersContainer>
-      <select name='pages' onChange={(e) => setPage(Number(e?.target?.value))}>
-        {Array.from({ length: data?.characters?.info?.pages }).map((_, i) => (
-          <option selected={i + 1 === page} value={i + 1} key={i}>
-            {i + 1}
-          </option>
-        ))}
-      </select>
+
+      {data?.characters?.info?.pages && (
+        <InputLabelContainer>
+          <InputLabel>Choose page</InputLabel>
+          <select
+            name='pages'
+            onChange={(e) => setPage(Number(e?.target?.value))}
+          >
+            {Array.from({ length: data?.characters?.info?.pages }).map(
+              (_, i) => (
+                <option selected={i + 1 === page} value={i + 1} key={i}>
+                  {i + 1}
+                </option>
+              ),
+            )}
+          </select>
+        </InputLabelContainer>
+      )}
     </>
   );
 };
